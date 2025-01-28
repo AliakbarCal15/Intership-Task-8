@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blink Auto</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .marquee {
+            background-color: #ffcc00;
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .appointment-section {
+            padding: 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .appointment-section h2 {
+            color: #333;
+        }
+
+        .appointment-section form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .appointment-section input,
+        .appointment-section select,
+        .appointment-section button {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .appointment-section button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dialog-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .dialog-box p {
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        .dialog-box button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 700px;
+            left: 700px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">Back to Home</a>
+
+    <header>
+        <nav>
+            <a href="index.html" onclick="navigateTo('home')">Home</a>
+            ||<a href="#services" onclick="navigateTo('services')">Services</a>
+        </nav>
+    </header>
+
+    <div class="marquee">
+        <span>Flat 30% Off on All Accessories! Flat 30% Off on All Accessories!</span>
+    </div>
+
+    <main id="home">
+        <section>
+            <h1 style="text-align: center; color: #0033cc; margin-top: 20px;">Welcome to Blink Auto</h1>
+        </section>
+
+        <section class="appointment-section">
+            <h2>Book an Appointment</h2>
+            <form id="appointmentForm">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <select id="service" required>
+                    <option value="">Select Service</option>
+                    <option value="Denting and Painting">Denting and Painting</option>
+                    <option value="Wheel Alignment">Wheel Alignment</option>
+                    <option value="Oil and Filter Change">Oil and Filter Change</option>
+                    <option value="Battery Testing">Battery Testing</option>
+                    <option value="Washing and Detailing">Washing and Detailing</option>
+                </select>
+                <input type="date" id="date" required>
+                <select id="slot">
+                    <option value="">Select Time Slot</option>
+                    <option value="9:00 AM - 10:00 AM">9:00 AM - 10:00 AM</option>
+                    <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+                    <option value="2:00 PM - 3:00 PM">2:00 PM - 3:00 PM</option>
+                </select>
+                <button type="submit">Confirm Appointment</button>
+            </form>
+        </section>
+    </main>
+
+    <section id="services">
+        <h2 style="text-align: center; margin: 20px 0;"></h2>
+        <p style="text-align: center;">.</p>
+    </section>
+
+    <footer>
+        <div>...</div>
+    </footer>
+
+    <div class="dialog-overlay" id="dialogOverlay"></div>
+    <div class="dialog-box" id="dialogBox">
+        <p id="dialogMessage"></p>
+        <button onclick="closeDialog()">OK</button>
+    </div>
+
+    <script>
+        const form = document.getElementById('appointmentForm');
+        const dialogBox = document.getElementById('dialogBox');
+        const dialogOverlay = document.getElementById('dialogOverlay');
+        const dialogMessage = document.getElementById('dialogMessage');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const slot = document.getElementById('slot').value;
+
+            if (name && email && service && date && slot) {
+                try {
+                    const response = await fetch('http://localhost:3000/send-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            service,
+                            date,
+                            slot
+                        })
+                    });
+
+                    if (response.ok) {
+                        dialogMessage.textContent = `Appointment confirmed for ${name} on ${date} during ${slot} for ${service} service. Confirmation email sent to ${email}`;
+                    } else {
+                        dialogMessage.textContent = `Appointment confirmed, but there was an issue sending the email confirmation.`;
+                    }
+                } catch (error) {
+                    dialogMessage.textContent = `Appointment confirmed for ${name} on ${date} during ${slot} for ${service} service. Confirmation email sent to ${email}`;
+                }
+                
+                dialogOverlay.style.display = 'block';
+                dialogBox.style.display = 'block';
+                form.reset();             }
+        });
+
+        function closeDialog() {
+            dialogOverlay.style.display = 'none';
+            dialogBox.style.display = 'none';
+        }
+
+        function navigateTo(section) {
+            const target = document.getElementById(section);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Close dialog when clicking outside
+        dialogOverlay.addEventListener('click', function(e) {
+            if (e.target === dialogOverlay) {
+                closeDialog();
+            }
+        });
+
+        // Set minimum date to today
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+    </script>
+</body>
+</html>

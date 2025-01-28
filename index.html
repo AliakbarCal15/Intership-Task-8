@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blink Auto - Home</title>
+    <style>
+        /* Base Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            color: #ecf0f1;
+        }
+
+        .navbar .logo {
+            color: #ecf0f1;
+            font-size: 2vw;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #ecf0f1;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #34495e;
+        }
+
+        .navbar ul li .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #34495e;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            min-width: 160px;
+            border-radius: 5px;
+        }
+
+        .navbar ul li:hover .dropdown {
+            display: block;
+        }
+
+        .navbar ul li .dropdown a {
+            display: block;
+            padding: 1rem;
+            color: #ecf0f1;
+            white-space: nowrap;
+            text-align: left;
+        }
+
+        .navbar ul li .dropdown a:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Search Styles */
+        .search-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-container input[type="text"] {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px 0 0 4px;
+            width: 200px;
+            margin: 0;
+        }
+
+        .search-container button {
+            padding: 0.5rem 1rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-container button:hover {
+            background-color: #2980b9;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 0.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .result-item {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item .item-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .result-item .item-stock {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .no-results {
+            padding: 1rem;
+            text-align: center;
+            color: #7f8c8d;
+        }
+
+        /* Banner Styles */
+        .banner {
+            background-image: url('https://via.placeholder.com/1500x600');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ecf0f1;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        .banner h1 {
+            font-size: 6vw;
+            margin: 0;
+            color: #000080;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 1.5rem 0 0.5rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-section {
+            margin: 0.5rem;
+        }
+
+        .footer-section h3 {
+            color: #3498db;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.3rem;
+        }
+
+        .footer-section p {
+            margin: 0.3rem 0;
+            font-size: 0.9rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .contact-buttons a {
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .contact-buttons a:hover {
+            background-color: #2980b9;
+        }
+
+        .social-media {
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .social-media a {
+            color: #3498db;
+            margin: 0 0.8rem;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 0.5rem 0;
+            border-top: 1px solid #34495e;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar ul {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .navbar ul li {
+                margin: 0.5rem 0;
+            }
+
+            .search-container {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .search-container input[type="text"] {
+                width: calc(100% - 100px);
+            }
+
+            .search-results {
+                width: 100%;
+                right: auto;
+                left: 0;
+            }
+
+            .footer-section {
+                flex: 0 0 calc(50% - 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .banner h1 {
+                font-size: 7vw;
+            }
+
+            .search-container {
+                flex-direction: row;
+            }
+
+            .footer-section {
+                flex: 0 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">Blink Auto</a>
+        <ul>
+            <li><a href="login.html">Login/Sign up</a></li>
+            <li>
+                <a href="#services">Services</a>
+                <div class="dropdown">
+                    <a href="#">Denting and Painting</a>
+                    <a href="#">Wheel Alignment</a>
+                    <a href="#">Oil and Filter Change</a>
+                    <a href="#">Battery Testing</a>
+                    <a href="#">Washing and Detailing</a>
+                </div>
+            </li>
+            <li>
+                <a href="#inventory">Inventory</a>
+                <div class="dropdown">
+                    <a href="#">Engine Oil - 50L</a>
+                    <a href="#">Brake Pads - 30 Units</a>
+                    <a href="#">Air Filters - 40 Units</a>
+                    <a href="#">Car Batteries - 20 Units</a>
+                    <a href="#">Tires - 60 Units</a>
+                    <a href="#">Spark Plugs - 70 Units</a>
+                    <a href="#">Radiators - 15 Units</a>
+                    <a href="#">Headlights - 25 Units</a>
+                    <a href="#">Wiper Blades - 35 Units</a>
+                    <a href="#">Fuel Pumps - 10 Units</a>
+                </div>
+            </li>
+            <li><a href="sample txt about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="appointment.html">Schedule Appointment</a></li>
+        </ul>
+        <div class="search-container">
+            <input type="text" id="search-box" placeholder="Search Inventory...">
+            <button onclick="searchInventory()">Search</button>
+            <div id="search-results" class="search-results"></div>
+        </div>
+    </nav>
+
+    <section class="banner">
+        <div>
+            <h1>Welcome to Blink Auto</h1>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="login.html">Login/Signup</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#inventory">Inventory</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>📍 123 Camp Street, Pune, Maharashtra</p>
+                <p>📞 +919156770832</p>
+                <p>✉️ info@blinkauto.com</p>
+                <div class="contact-buttons">
+                    <a href="mailto:aliakbarcal15@gmail.com">Email Us</a>
+                    <a href="tel:+919156770832">Call Now</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Business Hours</h3>
+                <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                <p>Saturday: 9:00 AM - 4:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+        </div>
+
+        <div class="social-media">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+        </div>
+
+        <div class="copyright">
+            <p>© 2025 Blink Auto. Founded by Aliakbar Calcuttawala All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const inventory = [
+            { name: "Engine Oil", stock: "50L", category: "Fluids" },
+            { name: "Brake Pads", stock: "30 Units", category: "Brakes" },
+            { name: "Air Filters", stock: "40 Units", category: "Filters" },
+            { name: "Car Batteries", stock: "20 Units", category: "Electrical" },
+            { name: "Tires", stock: "60 Units", category: "Wheels" },
+            { name: "Spark Plugs", stock: "70 Units", category: "Electrical" },
+            { name: "Radiators", stock: "15 Units", category: "Cooling" },
+            { name: "Headlights", stock: "25 Units", category: "Lighting" },
+            { name: "Wiper Blades", stock: "35 Units", category: "Exterior" },
+            { name: "Fuel Pumps", stock: "10 Units", category: "Fuel System" }
+        ];
+
+        function searchInventory() {
+            const searchTerm = document.getElementById('search-box').value.toLowerCase();
+            const resultsContainer = document.getElementById('search-results');
+            resultsContainer.classList.add('active');
+            
+            resultsContainer.innerHTML = '';
+            
+            if (searchTerm.trim() === '') {
+                resultsContainer.innerHTML = '<div class="no-results">Please enter a search term</div>';
+                return;
+            }
+            
+            const results = inventory.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) || 
+                item.category.toLowerCase().includes(searchTerm)
+            );
+            
+            if (results.length > 0) {
+                results.forEach(item => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    resultItem.innerHTML = `
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-stock">Stock: ${item.stock}</span>
+                    `;
+                    resultsContainer.appendChild(resultItem);
+                });
+            } else {
+                resultsContainer.innerHTML = '<div class="no-results">No items found matching your search</div>';
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const searchResults = document.getElementById('search-results');
+            const searchContainer = document.querySelector('.search-container');
+            if (!searchContainer.contains(event.target)) {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        document.getElementById('search-box').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchInventory();
+            }
+        });
+    </script>
+</body>
+</html>

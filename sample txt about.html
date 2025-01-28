@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blink Auto - About Us</title>
+    <style>
+        
+        .about-us {
+            padding: 4rem 2rem;
+           background: url('C:/Users/Admin/Desktop/General/Numtery task/web.jpg') no-repeat center center/cover;
+
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+            box-shadow: inset 0 0 0 90000px rgba(0, 0, 0, 0.4);
+        }
+
+        .about-us h2 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            color: navy blue //#f1c40f;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .about-us-carousel {
+            position: relative;
+            max-width: 900px;
+            margin: 2rem auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            padding: 3rem;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .carousel-item img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .carousel-item p {
+            font-size: 1.4rem;
+            color: navy blue;
+            line-height: 1.8;
+            text-shadow: 1px 1px 4px rgba(500, 500, 500, 500);
+        }
+
+        .carousel-item img.gif {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-button {
+            background-color: rgba(0, 0, 0, 0);
+            color: #2c3e50;
+            border: none;
+            padding: 0.8rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0);
+            transform: scale(1.1);
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            background-color: #7f8c8d;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .indicator.active {
+            background-color: #f1c40f;
+        }
+
+        .carousel-item p {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .carousel-item .extra-content {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <section class="about-us" id="about-us">
+        <h2>About Us</h2>
+        <div class="about-us-carousel">
+            <div class="carousel-slide">
+                <div class="carousel-item active">
+                    <img class="gif" src="C:\Users\Admin\Desktop\General\Numtery task\Cool Text - Our Beginning 474616206003337.png" alt="Our Beginning">
+                    <p>Our automotive services initiative was founded on a transformative mission to redefine industry standards. We passionately committed to delivering exceptional vehicle maintenance and support through three core principles: unwavering reliability that customers can trust, competitive pricing that makes quality service accessible, and a relentless pursuit of operational excellence that elevates every customer interaction. Our goal transcends mere transactional service—we aim to build long-term trust, provide peace of mind, and set new benchmarks in automotive care by consistently exceeding expectations and prioritizing customer satisfaction at every touchpoint.</p>
+                    <p class="extra-content">"Driven by innovation and trust."</p>
+                </div>
+                <div class="carousel-item">
+                    <img class="gif" src="C:\Users\Admin\Desktop\General\Numtery task\Cool Text - Our Mission 474616245224533.png" alt="Our Mission">
+                    <p>We drive automotive excellence by offering innovative solutions that prioritize customer satisfaction, vehicle safety, and sustainability. Through advanced technologies, personalized services, and eco-friendly practices, we provide comprehensive automotive support that sets new industry standards, making us the preferred choice for discerning car owners seeking reliable, safe, and forward-thinking vehicle care.</p>
+                    <p class="extra-content">"Every journey begins with trust."</p>
+                </div>
+                <div class="carousel-item">
+                    <img class="gif" src="C:\Users\Admin\Desktop\General\Numtery task\Cool Text - Our Vision 474616229821226.png" alt="Our Vision">
+                    <p>We aspire to establish a global automotive service brand recognized worldwide for unparalleled trust, complete transparency, and exceptional care, setting a new benchmark in customer-centric vehicle maintenance and support.</p>
+                    <p class="extra-content">"Crafting excellence, one car at a time."</p>
+                </div>
+                <div class="carousel-item">
+                    <img class="gif" src="C:\Users\Admin\Desktop\General\Numtery task\Cool Text - Why Choose us 474616265151290.png" alt="Why Choose Us">
+                    <p>We architect a transformative automotive ecosystem where advanced technology, elite expertise, and unrivaled customer experience converge—redefining vehicular excellence by creating intelligent, responsive solutions that transcend traditional service boundaries and set new global standards.</p>
+                    <p class="extra-content">"Quality and care, every mile."</p>
+                </div>
+            </div>
+            <div class="carousel-buttons">
+                <button class="carousel-button" id="prev">&#10094;</button>
+                <button class="carousel-button" id="next">&#10095;</button>
+            </div>
+        </div>
+        <div class="carousel-indicators">
+            <span class="indicator active" data-index="0"></span>
+            <span class="indicator" data-index="1"></span>
+            <span class="indicator" data-index="2"></span>
+            <span class="indicator" data-index="3"></span>
+        </div>
+    </section>
+
+    <script>
+        const slide = document.querySelector('.carousel-slide');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const indicators = document.querySelectorAll('.indicator');
+
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            items[currentIndex].classList.remove('active');
+            indicators[currentIndex].classList.remove('active');
+
+            currentIndex = (index + items.length) % items.length;
+
+            items[currentIndex].classList.add('active');
+            indicators[currentIndex].classList.add('active');
+            slide.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        prevButton.addEventListener('click', () => showSlide(currentIndex - 1));
+        nextButton.addEventListener('click', () => showSlide(currentIndex + 1));
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => showSlide(index));
+        });
+
+        // Auto-play carousel
+        setInterval(() => showSlide(currentIndex + 1), 7000);
+    </script>
+</body>
+</html>
